@@ -8,4 +8,3 @@ prerequisites:
   - pkg-config
   - unzip
   - curl
-

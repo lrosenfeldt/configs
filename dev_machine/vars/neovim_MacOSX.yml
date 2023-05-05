@@ -6,4 +6,3 @@ prerequisites:
   - pkg-config
   - gettext
   - curl
-
