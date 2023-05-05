@@ -3,7 +3,7 @@
 My collected configuration automated with ansible. Because debugging yaml is fun!
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/lrosenfeldt/ansible/main/scripts/ansible-init | /bin/sh -s
+/bin/sh -c "$(curl -fsSL https://raw.githubusercontent.com/lrosenfeldt/ansible/main/scripts/ansible-init)"
 ```
 
 ## For Pop!\_OS
