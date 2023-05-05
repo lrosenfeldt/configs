@@ -1,0 +1,15 @@
+#!/bin/sh
+
+set -u
+
+if [ "$(basename $PWD)" != "ansible" ]; then
+	echo "Not in project root."
+	exit 1
+fi
+
+yamllint -d relaxed .
+ansible-lint
+
+if [ "${1:-}" = "--full" ]; then
+	molecule test
+fi

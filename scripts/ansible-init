@@ -1,0 +1,121 @@
+#!/bin/sh
+
+set -eu
+
+fail() {
+  printf "%s\n" "$1" "Failed."
+  exit 1
+}
+
+close() {
+  printf "%s\n" "$1" "Finished."
+  exit 0
+}
+
+is_root() {
+  [ "$(id -u)" -eq 0 ]
+}
+
+probe_os() {
+  kernel="$(uname -s)"
+  case "$kernel" in
+  "Darwin")
+    # use sw_vers to get additional information
+    echo "macos"
+  ;;
+  "Linux")
+    for file in /etc/os-release /usr/lib/os-release; do
+      if [ -f "$file" -a -r "$file" ]; then
+        cat "$file" | grep "^ID=" - | tr -d "ID="
+        return 0
+      fi
+    done
+
+    echo "na"
+    return 1
+  ;;
+  "*")
+    echo "na"
+    return 2
+  ;;
+  esac
+}
+
+run() {
+  # parse args
+  SKIP_PLAYBOOK=""
+  while [ "$#" -gt 0 ]; do
+    case "$1" in
+    "-h" | "--help")
+      echo "\
+Usage: ansible-init [OPTIONS]
+  -h, --help            Display this help message.
+  --skip-playbook       Only installs ansible.
+"
+    ;;
+    "--skip-playbook")
+      SKIP_PLAYBOOK=true
+    ;;
+    esac
+
+    shift 1
+  done
+
+  if ! { os="$(probe_os)"; }; then
+    code="$?"
+    case "$code" in
+    "1")
+      fail "The os-release file couldn't be found or is unreadable."
+    ;;
+    "2")
+      fail "Only Linux and MacOS systems are supported."
+    ;;
+    esac
+
+    exit 1
+  fi
+
+  case "$os" in
+  "macos")
+    if ! brew --version 1>/dev/null 2>/dev/null; then
+      xcode-select --install
+      if is_root; then
+        fail "Do not run remote scripts with root privileges!"
+      fi
+      /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+    fi
+
+    brew install python3 ansible git
+  ;;
+  "pop")
+    sudo apt-get update
+    sudo apt-get install python3 python3-pip git
+    sudo python3 -m pip install ansible
+  ;;
+  "*")
+    fail "'$os' is currently not supported."
+  ;;
+  esac
+
+  if ! [ "$SKIP_PLAYBOOK" ]; then
+    # prompt for vault if not set up yet
+    if ! [ -r "~/.vault_key" ]; then
+        printf "%s" "Vault Pass:" 
+        stty -echo
+        read vault_pass
+        stty echo
+        echo "$vault_pass" > "$HOME/.vault_key"
+    fi
+
+    ansible-pull \
+      --ask-become \
+      --directory ~/ansible-old \
+      --module-name git \
+      --url file:///home/lrosenfeldt/ansible \
+      main.yml
+  fi
+
+  close "You're ready to go!"
+}
+
+run "$@"

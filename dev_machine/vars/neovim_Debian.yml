@@ -1,0 +1,11 @@
+---
+prerequisites:
+  - ninja-build
+  - gettext
+  - libtool-bin
+  - cmake
+  - g++
+  - pkg-config
+  - unzip
+  - curl
+

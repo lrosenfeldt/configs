@@ -1,0 +1,63 @@
+---
+- name: Create volta directory.
+  ansible.builtin.file:
+    mode: "0755"
+    path: "{{ volta_home }}/bin"
+    recurse: false
+    state: directory
+
+- name: Download volta installation script.
+  ansible.builtin.get_url:
+    dest: "{{ volta_home }}/bin/volta_install"
+    mode: "0755"
+    url: https://get.volta.sh/
+
+- name: Check for existing volta version.
+  ansible.builtin.shell: |
+    command -v volta
+  register: which_volta
+  changed_when: false
+  failed_when: false
+
+- name: Install volta tool manager for node.js.
+  ansible.builtin.shell:
+    cmd: "{{ volta_home }}/bin/volta_install"
+    executable: /bin/bash
+  environment:
+    VOLTA_HOME: "{{ volta_home }}"
+    SHELL: "{{ volta_shell }}"
+  register: install_volta
+  changed_when: "'already installed' not in install_volta.stderr"
+  when: not which_volta.stdout
+
+- name: Generate shell completions for volta.
+  ansible.builtin.command:
+    argv:
+      - "{{ volta_home }}/bin/volta"
+      - completions
+      - "{{ volta_shell | basename }}"
+  register: completions
+  changed_when: false
+
+- name: Add shell completions for volta.
+  vars:
+    shell_name: "{{ volta_shell | basename }}"
+    shell_config_path:
+      bash: "{{ ansible_user_dir }}/.bashrc"
+      fish: "{{ ansible_user_dir }}/.config/fish/completions/volta.fish"
+      zsh: "{{ ansible_user_dir }}/.zshrc"
+  ansible.builtin.blockinfile:
+    block: "{{ completions.stdout }}"
+    create: true
+    marker: "# {mark} completions for volta - managed by ansible"
+    mode: "0644"
+    path: "{{ shell_config_path[shell_name] }}"
+  when: shell_name in ['bash', 'fish', 'zsh']
+
+- name: Install & use latest LTS version of node.js.
+  ansible.builtin.command:
+    argv:
+      - "{{ volta_home }}/bin/volta"
+      - install
+      - node@lts
+  changed_when: false

@@ -1,0 +1,9 @@
+---
+prerequisites:
+  - ninja
+  - libtool
+  - cmake
+  - pkg-config
+  - gettext
+  - curl
+

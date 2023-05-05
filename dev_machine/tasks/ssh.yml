@@ -1,0 +1,26 @@
+---
+# Setup ssh keys
+- name: Create .ssh directory.
+  ansible.builtin.file:
+    dest: "{{ ssh_dest_key | dirname }}"
+    mode: "0700"
+    state: directory
+
+- name: Install ssh key.
+  ansible.builtin.copy:
+    src: "{{ ssh_src_key }}"
+    dest: "{{ ssh_dest_key }}"
+    mode: "0600"
+
+- name: Install public ssh key.
+  ansible.builtin.copy:
+    src: "{{ ssh_src_key }}.pub"
+    dest: "{{ ssh_dest_key }}.pub"
+    mode: "0644"
+
+- name: Add github to known hosts.
+  ansible.builtin.known_hosts:
+    key: "{{ item }}"
+    name: github.com
+    state: present
+  loop: "{{ ssh_github_fingerprints }}"

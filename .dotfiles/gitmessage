@@ -1,0 +1,28 @@
+type(optional scope): 
+#
+# Rules
+# -----
+# - Separate subject from body with a blank line
+# - Limit the subject line to 100 characters
+# - Use the conventional commit message style described above
+# - Decapitalize the `<description>`
+# - Do not end the subject line with a period
+# - Use the imperative mood in the subject line
+# - Use the body to explain what and why vs. how
+#
+# Type
+# ----
+# feat -> A new feature visible to the user
+# fix -> A fix of a behavior that is not a new feature (i.e. bug)
+# docs -> Changes to documentation or anything related to documentation
+# style -> Changes that do not affect the meaning of the code (i.e. remove whitespaces, formatting), not css styling etc.
+# refactor -> Changes to code that do not fix bugs or add features
+# test -> Changes to test files or anything related to tests
+# chore -> Anything else that does not fall into one of the other categories
+# 
+# Examples
+# --------
+# - feat: users are able to change their basic account information
+# - docs(changelog): correct spelling of CHANGELOG
+# - fix(toast): fix bug where toast position was incorrect on mobile devices
+

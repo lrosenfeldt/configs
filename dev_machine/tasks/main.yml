@@ -1,0 +1,27 @@
+---
+- name: Setup ssh.
+  ansible.builtin.import_tasks: ssh.yml
+  tags: ["ssh"]
+
+- name: Setup MacOS specific configuration.
+  ansible.builtin.import_tasks: extra_MacOSX.yml
+  when: ansible_distribution == 'MacOSX'
+  tags: ["mac"]
+
+- name: Setup Pop! OS specific configuration.
+  ansible.builtin.import_tasks: extra_Pop!_OS.yml
+  when: ansible_distribution == 'Pop!_OS'
+  tags: ["pop"]
+
+- name: Use the fish shell.
+  ansible.builtin.import_tasks: fish.yml
+  tags: ["fish"]
+
+- name: Use Volta JavaScript toolchain manager.
+  ansible.builtin.import_tasks: volta.yml
+  tags: ["volta"]
+
+- name: Install & build neovim from source.
+  ansible.builtin.import_tasks: neovim.yml
+  tags: ["neovim"]
+  

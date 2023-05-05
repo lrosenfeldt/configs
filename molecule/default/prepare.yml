@@ -1,0 +1,15 @@
+---
+- name: Prepare
+  hosts: all
+  become: true
+
+  tasks:
+    - name: Update apt package cache & install deps.
+      ansible.builtin.apt:
+        cache_valid_time: 3600
+        name:
+          - curl
+          - git
+          - ssh
+          - unzip
+        update_cache: true

@@ -1,0 +1,31 @@
+---
+- name: Setup my dev machine.
+  hosts: all
+
+  roles:
+    - role: dev_machine
+      tags: ["all"]
+
+    # - role: pop_os.docker
+    #   become: true
+    #   vars:
+    #     docker_compose_install: false
+    #     docker_compose_install_plugin: true
+    #     docker_edition: 'ce'
+    #   tags: ["all", "docker"]
+
+  tasks:
+    # dotfiles
+    - name: Add template for git commit messages.
+      ansible.builtin.copy:
+        src: .dotfiles/gitmessage
+        dest: "{{ ansible_user_dir }}/.gitmessage"
+        mode: "0644"
+      tags: ["all", "git"]
+
+    - name: Add git configuration.
+      ansible.builtin.template:
+        src: .dotfiles/gitconfig
+        dest: "{{ ansible_user_dir }}/.gitconfig"
+        mode: "0644"
+      tags: ["all", "git"]

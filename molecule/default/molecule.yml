@@ -1,0 +1,19 @@
+---
+dependency:
+  name: galaxy
+driver:
+  name: docker
+platforms:
+  - name: instance
+    dockerfile: Dockerfile.j2
+    image: geerlingguy/docker-ubuntu2004-ansible
+    platform: linux/${PLATFORM}
+    pre_build_image: false
+provisioner:
+  name: ansible
+  inventory:
+    host_vars:
+      instance:
+        ansible_user: ansible
+verifier:
+  name: ansible

@@ -1,0 +1,31 @@
+---
+# tasks specific to macos
+- name: Install brew packages.
+  community.general.homebrew:
+    name:
+      - curl
+      - gh
+      - git
+      - htop
+      - maven
+      - mysql
+      - openjdk@11
+      - rbenv
+      - watchman
+    state: present
+
+- name: Install apps through brew casks.
+  community.general.homebrew_cask:
+    name:
+      - 1password
+      - amethyst
+      - android-studio
+      - dbeaver-community
+      - google-chrome
+      - microsoft-outlook
+      - microsoft-teams
+      - notion
+      - postman
+      - slack
+      - visual-studio-code
+    state: present

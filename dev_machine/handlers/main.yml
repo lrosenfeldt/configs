@@ -1,0 +1,16 @@
+---
+# Neovim
+# ------
+- name: Compile neovim.  # noqa: no-changed-when
+  become: true
+  ansible.builtin.command:
+    cmd: make CMAKE_BUILD_TYPE=RelWithDebInfo
+    chdir: "{{ neovim_dest }}"
+  listen: rebuild neovim
+
+- name: Install neovim.  # noqa: no-changed-when
+  become: true
+  ansible.builtin.command:
+    cmd: make install
+    chdir: "{{ neovim_dest }}"
+  listen: rebuild neovim

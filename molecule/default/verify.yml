@@ -1,0 +1,31 @@
+---
+# This is an example playbook to execute Ansible tests.
+
+- name: Verify
+  hosts: all
+  gather_subset:
+    - user_shell
+  tasks:
+    - name: Check that fnm is callable in an interactive shell.
+      # fnm configuration is only available in interactive shells.
+      ansible.builtin.command:
+        argv:
+          - "{{ ansible_user_shell }}"
+          # ensure that the config file is sourced by forcing interactive mode
+          - -i
+          - -c
+          # shell will exit automatically when provided with -c
+          - fnm --version
+      changed_when: false
+
+    - name: Check that node is callable in an interactive shell.
+      # fnm configuration is only available in interactive shells.
+      ansible.builtin.command:
+        argv:
+          - "{{ ansible_user_shell }}"
+          # ensure that the config file is sourced by forcing interactive mode
+          - -i
+          - -c
+          # shell will exit automatically when provided with -c
+          - node --version
+      changed_when: false

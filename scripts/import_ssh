@@ -1,0 +1,8 @@
+#!/bin/sh
+
+set -eu
+
+VAULT_PATH="dev_machine/vault"
+
+ansible-vault encrypt --output "$VAULT_PATH/id_rsa" $HOME/.ssh/id_rsa
+ansible-vault encrypt --output "$VAULT_PATH/id_rsa.pub" $HOME/.ssh/id_rsa.pub
