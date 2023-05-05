@@ -104,14 +104,15 @@ Usage: ansible-init [OPTIONS]
         stty -echo
         read vault_pass
         stty echo
+	echo ""
         echo "$vault_pass" > "$HOME/.vault_key"
     fi
 
     ansible-pull \
       --ask-become \
-      --directory ~/ansible-old \
+      --directory ~/ansible \
       --module-name git \
-      --url file:///home/lrosenfeldt/ansible \
+      --url https://github.com/lrosenfeldt/ansible \
       main.yml
   fi
 
