@@ -21,5 +21,5 @@ Run the playbook & enjoy.
 To-Do:
 - [x] Add docker to pop os
 - [ ] test with molecule
-- [ ] Add init script to bootstrap ansible on a pc
+- [x] Add init script to bootstrap ansible on a pc
 - [ ] Add python environment & ci
