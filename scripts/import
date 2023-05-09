@@ -1,0 +1,27 @@
+#!/bin/sh
+
+set -eu
+
+VAULT_PATH="dev_machine/vault"
+
+command="${1:-}"
+
+if [ -z "$command" ]; then
+    exit 1
+fi
+
+case "$command" in
+"ssh")
+    ansible-vault encrypt --output "$VAULT_PATH/id_rsa" $HOME/.ssh/id_rsa
+    ansible-vault encrypt --output "$VAULT_PATH/id_rsa.pub" $HOME/.ssh/id_rsa.pub
+;;
+"nvim"|"neovim")
+    if ! [ -d "./.dotfiles/.config" ]; then
+        mkdir -p .dotfiles/.config
+    fi
+    cp -R ~/.config/nvim .dotfiles/.config 
+    # should be ignored -> see .gitignore
+    # only added for consistency when testing locally
+    rm -rf .dotfiles/.config/nvim/plugin
+;;
+esac
