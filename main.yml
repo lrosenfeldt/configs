@@ -6,13 +6,14 @@
     - role: dev_machine
       tags: ["all"]
 
-    # - role: pop_os.docker
-    #   become: true
-    #   vars:
-    #     docker_compose_install: false
-    #     docker_compose_install_plugin: true
-    #     docker_edition: 'ce'
-    #   tags: ["all", "docker"]
+    - role: pop_os.docker
+      become: true
+      vars:
+        docker_compose_install: false
+        docker_compose_install_plugin: true
+        docker_edition: 'ce'
+      when: ansible_distribution == 'Pop!_OS'
+      tags: ["all", "docker"]
 
   tasks:
     # dotfiles
