@@ -17,7 +17,7 @@
     use_become: "{{ ansible_facts['distribution'] != 'MacOSX' }}"
   become: "{{ use_become }}"
   ansible.builtin.package:
-    name: "{{ prerequisites }}"
+    name: "{{ prerequisites + ['ripgrep'] }}"
     state: present
 
 - name: Checkout the latest version of neovim.
@@ -29,3 +29,18 @@
     # use 'stable' for the stable release, 'HEAD' for the latest
     version: "{{ neovim_version }}"
   notify: rebuild neovim
+
+- name: Install Packer plugin manager for neovim.
+  block:
+    - name: Ensure directory for packer installation exists.
+      ansible.builtin.file:
+        path: "{{ neovim_packer_dest | dirname }}"
+        recurse: true
+        state: directory
+
+    - name: Install Packer plugin manager for neovim via git.
+      ansible.builtin.git:
+        repo: https://github.com/wbthomason/packer.nvim.git
+        depth: 1
+        dest: "{{ neovim_packer_dest }}"
+        version: HEAD  # noqa: latest[git]

@@ -14,3 +14,4 @@ volta_shell: "{{ ansible_user_shell }}"
 # neovim
 neovim_dest: "{{ ansible_user_dir }}/neovim"
 neovim_version: HEAD
+neovim_packer_dest: "{{ ansible_user_dir }}/.local/share/nvim/site/pack/packer/start/packer.nvim"
