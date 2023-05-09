@@ -35,6 +35,6 @@
       ansible.builtin.copy:
         # if an / is appended only the content will be copied!
         src: .dotfiles/.config/nvim
-        dest: "{{ ansible_user_dir }}/.config"
+        dest: "{{ ansible_user_dir }}/.config"
         mode: preserve
       tags: ["all", "neovim"]
