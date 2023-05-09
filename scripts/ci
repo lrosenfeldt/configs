@@ -8,7 +8,7 @@ if [ "$(basename $PWD)" != "ansible" ]; then
 fi
 
 yamllint -d relaxed .
-ansible-lint
+ansible-lint --exclude ".galaxy/"
 
 if [ "${1:-}" = "--full" ]; then
 	molecule test
