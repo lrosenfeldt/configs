@@ -11,5 +11,5 @@ yamllint -d relaxed .
 ansible-lint --exclude ".galaxy/"
 
 if [ "${1:-}" = "--full" ]; then
-	molecule test
+    ANSIBLE_VAULT_PASSWORD_FILE="~/.vault_key" molecule test --skip-tags=dconf
 fi

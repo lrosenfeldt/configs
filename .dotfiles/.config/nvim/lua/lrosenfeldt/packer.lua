@@ -1,10 +1,10 @@
 local ensure_packer = function()
     local fn = vim.fn
-    local install_path = fn.stdpath('data')..'/site/pack/packer/start/packer.nvim'
+    local install_path = fn.stdpath('data') .. '/site/pack/packer/start/packer.nvim'
     if fn.empty(fn.glob(install_path)) > 0 then
-      fn.system({'git', 'clone', '--depth', '1', 'https://github.com/wbthomason/packer.nvim', install_path})
-      vim.cmd [[packadd packer.nvim]]
-      return true
+        fn.system({ 'git', 'clone', '--depth', '1', 'https://github.com/wbthomason/packer.nvim', install_path })
+        vim.cmd [[packadd packer.nvim]]
+        return true
     end
     return false
 end
@@ -13,9 +13,9 @@ local packer_bootstrap = ensure_packer()
 
 return require('packer').startup(function(use)
     use 'wbthomason/packer.nvim'
-  -- My plugins here
-  -- use 'foo1/bar1.nvim'
-  -- use 'foo2/bar2.nvim'
+    -- My plugins here
+    -- use 'foo1/bar1.nvim'
+    -- use 'foo2/bar2.nvim'
     use {
         'nvim-treesitter/nvim-treesitter',
         run = function()
@@ -28,11 +28,11 @@ return require('packer').startup(function(use)
 
     use {
         'VonHeikemen/lsp-zero.nvim',
-        branch='v2.x',
-        requires={
-        --LSPSupport
-            {'neovim/nvim-lspconfig'},
-            {'williamboman/mason.nvim'},
+        branch = 'v2.x',
+        requires = {
+            --LSPSupport
+            { 'neovim/nvim-lspconfig' },
+            { 'williamboman/mason.nvim' },
             {
                 'williamboman/mason-lspconfig.nvim',
                 run = function()
@@ -40,10 +40,10 @@ return require('packer').startup(function(use)
                 end
             },
             --Autocompletion
-            {'hrsh7th/nvim-cmp'},
-            {'hrsh7th/cmp-nvim-lsp'},
+            { 'hrsh7th/nvim-cmp' },
+            { 'hrsh7th/cmp-nvim-lsp' },
             --Snippets
-            {'L3MON4D3/LuaSnip'},
+            { 'L3MON4D3/LuaSnip' },
         }
     }
 
@@ -52,14 +52,21 @@ return require('packer').startup(function(use)
         'nvim-telescope/telescope.nvim',
         branch = '0.1.x',
         requires = {
-            {'nvim-lua/plenary.nvim'},
+            { 'nvim-lua/plenary.nvim' },
         }
     }
     use 'tpope/vim-fugitive'
+    use {
+        'folke/trouble.nvim',
+        requires = 'nvim-tree/nvim-web-devicons',
+        config = function()
+            require 'trouble'.setup {}
+        end
+    }
 
     -- Automatically set up your configuration after cloning packer.nvim
     -- Put this at the end after all plugins
     if packer_bootstrap then
-        require('packer').sync()
+        require 'packer'.sync()
     end
 end)

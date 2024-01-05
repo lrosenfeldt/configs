@@ -6,8 +6,8 @@ driver:
 platforms:
   - name: instance
     dockerfile: Dockerfile.j2
-    image: geerlingguy/docker-ubuntu2004-ansible
-    platform: linux/${PLATFORM}
+    image: hugojosefson/popos
+    platform: linux/amd64
     pre_build_image: false
 provisioner:
   name: ansible

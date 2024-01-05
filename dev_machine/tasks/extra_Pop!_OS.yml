@@ -41,6 +41,7 @@
       - htop
       - keepassxc
       - python3-psutil  # requirement for ansible dconf module
+      - ripgrep
       - tmux
       - vlc
     state: present

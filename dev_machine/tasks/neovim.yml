@@ -17,7 +17,7 @@
     use_become: "{{ ansible_facts['distribution'] != 'MacOSX' }}"
   become: "{{ use_become }}"
   ansible.builtin.package:
-    name: "{{ prerequisites + ['ripgrep'] }}"
+    name: "{{ prerequisites }}"
     state: present
 
 - name: Checkout the latest version of neovim.

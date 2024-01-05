@@ -61,3 +61,12 @@
       - install
       - node@lts
   changed_when: false
+
+- name: Install global tools with volta.
+  ansible.builtin.command:
+    argv:
+      - "{{ volta_home }}/bin/volta"
+      - install
+      - yarn@1
+      - tree-sitter-cli
+  changed_when: false
