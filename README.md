@@ -24,3 +24,15 @@ To setup a machine first run:
 ## Archlinux
 
 TODO
+
+## Ideas
+
+- The current setup is quite convoluted. While I learned a lot about ansible and the testing is nice,
+it doesn't seem like the right tool. Especially testing is a hassle. Maybe I can write a simple tool
+for myself in go?
+
+- I should investigate why neovim compilation is freezing inside the container (molecule and manual). Maybe it's just the emulation on my mac causing trouble when runnning the compiler- I should investigate why neovim is building inside molecule. Maybe it's just the emulation on my mac causing trouble when runnning the compiler?
+
+- Add a dummy ssh key for the molecule run.
+
+- Add a homebrew container to test mac os stuff.
