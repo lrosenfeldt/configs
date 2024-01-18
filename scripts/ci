@@ -2,13 +2,13 @@
 
 set -u
 
-if [ "$(basename $PWD)" != "ansible" ]; then
+if ! [ -f ".gitignore" ]; then
 	echo "Not in project root."
 	exit 1
 fi
 
-yamllint -d relaxed .
-ansible-lint
+yamllint -d relaxed main.yml roles
+ansible-lint --exclude .galaxy
 
 if [ "${1:-}" = "--full" ]; then
 	molecule test

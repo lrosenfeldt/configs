@@ -6,20 +6,16 @@
 - name: Setup MacOS specific configuration.
   ansible.builtin.import_tasks: extra_MacOSX.yml
   when: ansible_distribution == 'MacOSX'
-  tags: ["mac"]
+  tags: ["mac", "packages"]
 
 - name: Setup Pop! OS specific configuration.
-  ansible.builtin.import_tasks: extra_Pop!_OS.yml
-  when: ansible_distribution == 'Pop!_OS'
-  tags: ["pop"]
+  ansible.builtin.import_tasks: extra_Archlinux.yml
+  when: ansible_distribution == 'Archlinux'
+  tags: ["arch"]
 
 - name: Use the fish shell.
   ansible.builtin.import_tasks: fish.yml
   tags: ["fish"]
-
-- name: Use Volta JavaScript toolchain manager.
-  ansible.builtin.import_tasks: volta.yml
-  tags: ["volta"]
 
 - name: Install & build neovim from source.
   ansible.builtin.import_tasks: neovim.yml

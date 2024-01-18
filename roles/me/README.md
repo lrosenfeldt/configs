@@ -1,10 +1,10 @@
-# Ansible role: dev_machine
+# Ansible role: me
 
-Setups a dev machine to my preferences. Doesn't install dotfiles.
+Setups a machine for me. Doesn't install dotfiles.
 
 ## Requirements
 
-No hard requirements. But this role was designed to run either on a MacBook or an Pop!\_OS machine.
+No hard requirements. But this role was designed to run either on a MacBook or a machine using Arch (btw).
 
 ## Role Variables
 
@@ -21,8 +21,6 @@ The following variables only exist to make future refactors a littler simpler. T
 - `ssh_src_key` path to the (encrypted) ssh keys
 - `ssh_dest_key` path to place the ssh keys in
 - `ssh_github_fingerprints` ssh fingerprints that are added to known hosts
-- `volta_home` path where volta will be installed to
-- `volta_shell` path to the binary of the user preffered shell.
 
 The actual config consists of:
 
@@ -40,7 +38,7 @@ Including an example of how to use your role (for instance, with variables passe
 ```yaml
 - hosts: workstations
   roles:
-    - name: lrosenfeldt.neovim
+    - name: lrosenfeldt.me
       vars:
         neovim_version: stable # or HEAD if you want the latest version
         neovim_dest: "{{ ansible_user_dir }}/nvim"

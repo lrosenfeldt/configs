@@ -1,9 +1,9 @@
 ---
 # tasks file for neovim
 - name: Load OS-specific variables.
-  ansible.builtin.include_vars: "{{ lookup('first_found', variables) }}"
+  ansible.builtin.include_vars: "{{ lookup('first_found', me_variables) }}"
   vars:
-    variables:
+    me_variables:
       files:
         - "neovim_{{ ansible_distribution }}.yml"
         - "neovim_{{ ansible_os_family }}.yml"
@@ -13,9 +13,7 @@
       skip: true
 
 - name: Install required packages.
-  vars:
-    use_become: "{{ ansible_facts['distribution'] != 'MacOSX' }}"
-  become: "{{ use_become }}"
+  become: "{{ ansible_facts['distribution'] != 'MacOSX' }}"
   ansible.builtin.package:
     name: "{{ prerequisites }}"
     state: present
@@ -28,4 +26,6 @@
     # branch name to checkout
     # use 'stable' for the stable release, 'HEAD' for the latest
     version: "{{ neovim_version }}"
+  register: me_checkout_neovim
+  changed_when: me_checkout_neovim.changed or (neovim_force_build | default(false))
   notify: rebuild neovim

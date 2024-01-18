@@ -10,7 +10,9 @@
       - maven
       - mysql
       - openjdk@11
+      - openjdk@17
       - rbenv
+      - stow
       - watchman
     state: present
 
@@ -18,11 +20,14 @@
   community.general.homebrew_cask:
     name:
       - 1password
+      - 1password-cli
       - amethyst
       - android-studio
       - dbeaver-community
+      - docker
       - google-chrome
       - microsoft-outlook
+      - microsoft-auto-update
       - microsoft-teams
       - notion
       - postman

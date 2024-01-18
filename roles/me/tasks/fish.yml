@@ -10,31 +10,31 @@
 - name: Locate fish shell binary.
   ansible.builtin.shell: |
     command -v fish
-  register: which_fish
+  register: me_which_fish
   changed_when: false
   failed_when: false
 
 - name: Add fish as known shell.
   become: true
   ansible.builtin.lineinfile:
-    line: "{{ which_fish.stdout }}"
+    line: "{{ me_which_fish.stdout }}"
     path: /etc/shells
 
 - name: Make fish default shell.
   become: true
   ansible.builtin.user:
     name: "{{ ansible_user_id }}"
-    shell: "{{ which_fish.stdout }}"
+    shell: "{{ me_which_fish.stdout }}"
   when: ansible_user_id != "root"
 
 - name: Check for fisher plugin manager.
   ansible.builtin.command: fish -c 'fisher --version'
-  register: check_fisher
+  register: me_check_fisher
   changed_when: false
   failed_when: false
 
 - name: Install fisher plugin manager.
   ansible.builtin.command: |
     fish -c "curl -fsSL https://raw.githubusercontent.com/jorgebucaran/fisher/main/functions/fisher.fish | source && fisher install jorgebucaran/fisher"
-  when: check_fisher.rc != 0
-  changed_when: check_fisher.rc != 0
+  when: me_check_fisher.rc != 0
+  changed_when: me_check_fisher.rc != 0

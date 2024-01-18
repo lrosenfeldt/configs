@@ -1,13 +1,15 @@
 [core]
     editor = nvim
-
 [user]
     email = lukasrosenfeldt@gmail.com
     name = Lukas Rosenfeldt
-
 [commit]
     cleanup = strip
     template = {{ ansible_user_dir }}/.gitmessage
-
 [init]
     defaultBranch = main
+[url "https://github.com/"]
+	insteadOf = git://github.com/
+[pull]
+	rebase = false
+

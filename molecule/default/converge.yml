@@ -1,3 +1,9 @@
 ---
 - name: Converge
-  import_playbook: ../../main.yml
+  hosts: all
+  tasks:
+    - name: "Include me"
+      ansible.builtin.include_role:
+        name: me
+      vars:
+        neovim_force_build: true

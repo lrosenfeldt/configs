@@ -1,0 +1,14 @@
+---
+- name: Install packages through pacman.
+  become: true
+  community.general.pacman:
+    update_cache: true
+    name:
+      - code
+      - fzf
+      - github-cli
+      - htop
+      - keepassxc
+      - tmux
+      - vlc
+    state: present

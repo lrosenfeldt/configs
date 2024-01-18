@@ -1,5 +1,6 @@
 ---
+collections:
+  - name: community.general
+
 roles:
-  - name: pop_os.docker
-    src: https://github.com/dale-c-anderson/ansible-role-docker.git
-    version: "75b8acc62652d101585c793c17c45ababa829d0c"
+  - name: geerlingguy.docker

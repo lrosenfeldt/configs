@@ -1,0 +1,124 @@
+#!/bin/sh
+
+set -eu
+
+log () {
+    printf "%s\n" "$1" 1>&2
+}
+
+is_root() {
+    [ "$(id -u)" -eq 0 ]
+}
+
+probe_os() {
+    kernel="$(uname -s)"
+    case "$kernel" in
+    "Darwin")
+        # use sw_vers to get additional information
+        echo "macos"
+    ;;
+    "Linux")
+        for file in /etc/os-release /usr/lib/os-release; do
+            if [ -f "$file" -a -r "$file" ]; then
+                cat "$file" | grep "^ID=" - | tr -d "ID="
+                return 0
+            fi
+        done
+
+        echo "na"
+        return 1
+    ;;
+    "*")
+        echo "na"
+        return 2
+    ;;
+    esac
+}
+
+probe_tools() {
+    echo "Checking tools" 1>&2
+    for tool in git python3 ansible; do
+        if $tool --version 1>/dev/null 2>/dev/null; then
+            echo "  [x] $tool" 1>&2
+        else
+            echo "  [ ] $tool" 1>&2
+        fi
+    done
+}
+
+ARGS_DIR="$HOME/configs"
+ARGS_REQUIREMENTS=""
+USAGE="\
+  Usage: ansible-init [OPTIONS]
+  -h, --help            Display this help message.
+  "
+run() {
+    # parse args
+    while [ "$#" -gt 0 ]; do
+        case "$1" in
+        "-h" | "--help")
+            echo "$USAGE"
+            exit 0
+        ;;
+        "-d" | "--dir")
+            ARGS_DIR="${2:-}"
+            if [ -z "$ARGS_DIR" ]; then
+                log "'$1' needs an argument"
+                exit 1
+            elif ! [ -d "$ARGS_DIR" ]; then
+                log "'$ARGS_DIR' is not a directory"
+                exit 1
+            fi
+
+            shift 1
+        ;;
+        "-r" | "--requirements")
+            ARGS_REQUIREMENTS=true
+        ;;
+        esac
+
+        shift 1
+    done
+
+    if ! { os="$(probe_os)"; }; then
+        code="$?"
+        case "$code" in
+        "1")
+            log "The os-release file couldn't be found or is unreadable."
+            exit 1
+        ;;
+        "2")
+            log "Only Linux and MacOS systems are supported."
+            exit 1
+        ;;
+        esac
+
+        exit 1
+    fi
+
+    case "$os" in
+    "macos")
+        if ! brew --version 1>/dev/null 2>/dev/null; then
+            xcode-select --install
+            if is_root; then
+                log "Do not run remote scripts with root privileges!"
+                exit 1
+            fi
+            /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+        fi
+        
+        if ! probe_tools 1>&2; then
+            brew install python3 ansible git
+        fi
+    ;;
+    "*")
+        log "'$os' is currently not supported."
+        exit 1
+    ;;
+    esac
+
+    printf "\nTo run this playbook, execute\n" 1>&2
+    echo "ansible-pull --module-name git --url https://github.com/lrosenfeldt/configs --purge --directory YOUR_DIRECTORY --tags all,galaxy main.yml"
+}
+
+run "$@"

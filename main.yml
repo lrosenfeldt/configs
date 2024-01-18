@@ -2,30 +2,35 @@
 - name: Setup my dev machine.
   hosts: all
 
+  pre_tasks:
+    - name: Install dependencies from galaxy.
+      ansible.builtin.command: ansible-galaxy install -r requirements.yml
+      tags: ["all", "galaxy"]
+
   roles:
-    - role: dev_machine
+    - role: me
       tags: ["all"]
 
-    # - role: pop_os.docker
-    #   become: true
-    #   vars:
-    #     docker_compose_install: false
-    #     docker_compose_install_plugin: true
-    #     docker_edition: 'ce'
-    #   tags: ["all", "docker"]
+    - role: geerlingguy.docker
+      become: true
+      vars:
+        docker_edition: 'ce'
+        docker_install_compose: true
+        docker_install_compose_plugin: false
+        docker_service_manage: "MOLECULE_FILE in lookup('env')"
+      when: ansible_distribution == 'Archlinux'
+      tags: ["all", "arch", "docker"]
 
   tasks:
-    # dotfiles
-    - name: Add template for git commit messages.
-      ansible.builtin.copy:
-        src: .dotfiles/gitmessage
-        dest: "{{ ansible_user_dir }}/.gitmessage"
-        mode: "0644"
-      tags: ["all", "git"]
-
     - name: Add git configuration.
       ansible.builtin.template:
-        src: .dotfiles/gitconfig
+        src: templates/.gitconfig
+        backup: true
         dest: "{{ ansible_user_dir }}/.gitconfig"
         mode: "0644"
-      tags: ["all", "git"]
+      tags: ["all", "dotfiles"]
+
+    - name: Stow dotfiles.
+      ansible.builtin.command: stow --restow configs --target {{ ansible_user_dir }}
+      changed_when: true
+      tags: ["all", "dotfiles"]

@@ -1,0 +1,7 @@
+---
+prerequisites:
+  - base-devel
+  - cmake
+  - unzip
+  - ninja
+  - curl

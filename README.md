@@ -1,14 +1,19 @@
-# Ansible
+# configs
 
 My collected configuration automated with ansible. Because debugging yaml is fun!
 
+## Guides
+
+To setup a machine first run:
 ```bash
-/bin/sh -c "$(curl -fsSL https://raw.githubusercontent.com/lrosenfeldt/ansible/main/scripts/ansible-init)"
+/bin/sh -c "$(curl -fsSL https://raw.githubusercontent.com/lrosenfeldt/ansible/main/scripts/init)"
 ```
 
-## For Pop!\_OS
+### Scripts
 
-Run the playbook & enjoy.
+- `./scripts/ci` - runs yamllint, ansible-lint and molecule
+- `./scripts/init` - setups a machine to use ansible on itself, actions depend of actual os and platform
+- `./scripts/import_ssh` - get current ssh keys from the machine and stored them encrypted in the vault
 
 ## For MacOS
 
@@ -16,10 +21,6 @@ Run the playbook & enjoy.
 - Run the playbook.
 - Configure Mission Control & Dock.
 
-## Development
+## Archlinux
 
-To-Do:
-- [x] Add docker to pop os
-- [ ] test with molecule
-- [x] Add init script to bootstrap ansible on a pc
-- [ ] Add python environment & ci
+TODO
