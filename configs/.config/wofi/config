@@ -1,0 +1,6 @@
+insensitive=true
+columns=1
+padding=5
+lines=6
+key_up=Ctrl-p
+key_down=Ctrl-n

@@ -1,0 +1,77 @@
+{
+    // "layer": "top", // Waybar at top layer
+    // "position": "bottom", // Waybar position (top|bottom|left|right)
+    "height": 30, // Waybar height (to be removed for auto height)
+    // "width": 1280, // Waybar width
+    "spacing": 4, // Gaps between modules (4px)
+    // Choose the order of the modules
+    "modules-left": ["sway/workspaces", "sway/window"],
+    "modules-center": ["clock"],
+    "modules-right": [
+      "battery",
+      "custom/sep",
+      "wireplumber",
+      "custom/sep",
+      "network",
+      "custom/sep",
+      "bluetooth",
+      "custom/sep",
+      "backlight"
+    ],
+    // Modules configuration
+    "sway/workspaces": {
+        "all-outputs": true,
+        "warp-on-scroll": false,
+        "active-only": true,
+        "disable-scroll": true,
+        "format": "{index}",
+    },
+    "clock": {
+        // "timezone": "America/New_York",
+        "format": "{:%H:%M:%S}",
+        "interval": 1,
+        "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
+        "format-alt": "{:%Y-%m-%d}"
+    },
+    "backlight": {
+        "device": "intel_backlight",
+        "backlight": 2,
+        "format": "Light {percent}%",
+    },
+    "battery": {
+        "states": {
+          "state95": 95,
+          "state80": 80,
+          "state60": 60,
+          "state40": 40,
+          "state20": 20,
+          "state5": 5,
+        },
+        "format": "{icon} {capacity}%",
+        "format-icons": ["[.....]", "[#....]", "[##...]", "[###..]", "[####.]", "[#####]"]
+    },
+    "wireplumber": {
+      "interval": 2,
+      "format": "Volume {volume}%",
+      "format-muted": "Volume X"
+    },
+    "bluetooth": {
+      "format-disabled": "Blue X",
+      "format-off": "Blue 0",
+      "format-on": "Blue 1",
+      "format-connected": "Blue {device_alias}",
+      "tooltip": true,
+      "tooltip-format-connected": "Battery {device_battery_percentage}%",
+    },
+    "network": {
+        // "interface": "wlp2*", // (Optional) To force the use of this interface
+        "interval": 1,
+        "format-wifi": "^ v {essid} {signalStrength}%",
+        "format-ethernet": "^ v LAN",
+        "format-disconnected": "^ v X",
+    },
+    "custom/sep": {
+      "format": "|",
+    },
+}
+

@@ -1,0 +1,27 @@
+* {
+    /* `otf-font-awesome` is required to be installed for icons */
+    font-family: FontAwesome, Roboto, Helvetica, Arial, sans-serif;
+    font-size: 18px;
+}
+
+#input,
+#window
+{
+    background-color: #18181b;
+    border: none;
+    color: #fafafa;
+    transition-property: background-color;
+    transition-duration: .2s;
+}
+
+#inner-box {
+  margin-top: 3px;
+}
+
+#entry {
+  margin: 2px 4px;
+}
+
+#entry:selected {
+  color: #71717a;
+}
