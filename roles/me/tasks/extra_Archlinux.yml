@@ -4,6 +4,7 @@
   community.general.pacman:
     update_cache: true
     name:
+      # apps
       - code
       - fzf
       - github-cli
@@ -11,4 +12,53 @@
       - keepassxc
       - tmux
       - vlc
+      # stuff to have a running laptop
+      - alacritty
+      - bluez
+      - bluez-utils
+      - brightnessctl
+      - clipman
+      - dunst
+      - less
+      - linux-firmware
+      - man-db
+      - man-pages
+      - networkmanager
+      - openssh
+      - pipewire
+      - pipewire-alsa
+      - pipewire-jack
+      - pipewire-pulse
+      - polkit-gnome
+      - stow
+      - sway
+      - swaybg
+      - swayidle
+      - swaylock
+      - thunar
+      - unzip
+      - waybar
+      - wireplumber
+      - wofi
+      - wpa_supplicant
+      - xdg-desktop-portal
+      - xdg-desktop-portal-gtk
+      - xdg-desktop-portal-wlr
+      - xorg-xwayland
+    state: present
+
+# needed to show battery percentage in waybar
+- name: Enable experimental bluetooth features
+  become: true
+  ansible.builtin.lineinfile:
+    path: /etc/bluetooth/main.conf
+    regexp: '^#?\s*Experimental\s*='
+    line: 'Experimental = true'
+
+- name: Enable experimental kernel bluetooth features
+  become: true
+  ansible.builtin.lineinfile:
+    path: /etc/bluetooth/main.conf
+    regexp: '^#?\s*KernelExperimental\s*='
+    line: 'KernelExperimental = true'
     state: present

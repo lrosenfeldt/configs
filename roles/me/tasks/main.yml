@@ -11,7 +11,7 @@
 - name: Setup Pop! OS specific configuration.
   ansible.builtin.import_tasks: extra_Archlinux.yml
   when: ansible_distribution == 'Archlinux'
-  tags: ["arch"]
+  tags: ["arch", "packages"]
 
 - name: Use the fish shell.
   ansible.builtin.import_tasks: fish.yml

@@ -29,8 +29,3 @@
         dest: "{{ ansible_user_dir }}/.gitconfig"
         mode: "0644"
       tags: ["all", "dotfiles"]
-
-    - name: Stow dotfiles.
-      ansible.builtin.command: stow --restow configs --target {{ ansible_user_dir }}
-      changed_when: true
-      tags: ["all", "dotfiles"]
