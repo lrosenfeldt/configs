@@ -12,4 +12,6 @@
 	insteadOf = git://github.com/
 [pull]
 	rebase = false
+[alias]
+  pushcur = !git push -u origin $(git branch --show-current)
 
