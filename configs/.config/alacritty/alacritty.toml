@@ -1,0 +1,5 @@
+live_config_reload = false
+ipc_socket = false
+
+[font]
+size = 13
