@@ -39,9 +39,7 @@ client.unfocused $transparent_color $transparent_color $transparent_color $trans
 
 smart_borders on
 ### Output configuration
-#
-# Default wallpaper (more resolutions are available in /usr/share/backgrounds/sway/)
-output * bg /home/luke/.local/share/backgrounds/wallhaven-vg8mo8.jpg fill
+output * bg /home/luke/.local/share/backgrounds/wallhaven-4do5k3.jpg fill
 #
 # Example configuration:
 #
@@ -71,9 +69,11 @@ exec wl-paste -t text --watch clipman store --no-persist
 input "1:1:AT_Translated_Set_2_keyboard" {
     xkb_layout de
     xkb_variant nodeadkeys
+    xkb_numlock enabled
 }
 input "2:7:SynPS/2_Synaptics_TouchPad" {
     dwt enabled
+    dwtp enabled
     natural_scroll enabled
     tap enabled
     tap_button_map lrm
@@ -220,8 +220,8 @@ bindsym $mod+r mode "resize"
 
 # Hardware stuff
   # Brightness
-  bindsym XF86MonBrightnessDown exec brightnessctl set 10%-
-  bindsym XF86MonBrightnessUp exec brightnessctl set +10%
+  bindsym XF86MonBrightnessDown exec brightnessctl set 5%-
+  bindsym XF86MonBrightnessUp exec brightnessctl set +5%
   # Audio
   bindsym XF86AudioRaiseVolume exec "wpctl set-volume -l 1.5 @DEFAULT_AUDIO_SINK@ 5%+"
   bindsym XF86AudioLowerVolume exec "wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-"
