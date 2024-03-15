@@ -73,6 +73,20 @@ return {
 		local capabilites = vim.lsp.protocol.make_client_capabilities()
 		capabilites = require("cmp_nvim_lsp").default_capabilities()
 
+		require("mason").setup()
+		require("mason-lspconfig").setup({
+			ensure_installed = {
+				"cssls",
+				"eslint",
+				"gopls",
+				"jdtls",
+				"jsonls",
+				"lua_ls",
+				"volar",
+				"yamlls",
+			},
+		})
+
 		-- :help mason-lspconfig-automatic-server-setup
 		require("mason-lspconfig").setup_handlers({
 			-- The first entry (without a key) will be the default handler
@@ -113,9 +127,7 @@ return {
 
 		none_ls.setup({
 			sources = {
-				none_ls.builtins.diagnostics.eslint_d,
 				none_ls.builtins.diagnostics.fish,
-				none_ls.builtins.formatting.eslint_d,
 				none_ls.builtins.formatting.fish_indent,
 				none_ls.builtins.formatting.prettierd,
 				none_ls.builtins.formatting.stylua,
