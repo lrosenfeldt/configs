@@ -20,7 +20,9 @@ return {
 		},
 		{
 			"<leader>ps",
-			"<cmd>Telescope live_grep<cr>",
+			function()
+				require("telescope.builtin").live_grep({ additional_args = { "--hidden" } })
+			end,
 			desc = "[s]earch for grep string in realtime",
 		},
 		{ "<leader>vh", "<cmd>Telescope help_tags<cr>", desc = "[v]iew [h]elp tags" },
