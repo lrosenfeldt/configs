@@ -50,7 +50,15 @@ vim.api.nvim_create_autocmd("TextYankPost", {
 vim.diagnostic.config({ virtual_text = false })
 
 function VirtualTextToggle()
-    local cfg = vim.diagnostic.config()
-    vim.diagnostic.config({ virtual_text = not cfg.virtual_text })
+	local cfg = vim.diagnostic.config()
+	vim.diagnostic.config({ virtual_text = not cfg.virtual_text })
 end
+
 vim.cmd("command! VirtualText lua VirtualTextToggle()")
+
+-- assume css filetype for .postcss files
+vim.filetype.add({
+	extension = {
+		postcss = "css",
+	},
+})
