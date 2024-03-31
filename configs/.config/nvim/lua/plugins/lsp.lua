@@ -31,24 +31,10 @@ local on_attach = function(_, bufnr)
 	-- Lesser used LSP functionality
 	nmap("gD", vim.lsp.buf.declaration, "[G]oto [D]eclaration")
 
-	-- Formatting, but save myself from the pities of tsserver
-	local clients = vim.lsp.get_clients({ bufnr = bufnr })
-	local has_null_ls = false
-	for _, active_client in pairs(clients) do
-		if active_client.name == "null-ls" then
-			has_null_ls = true
-			break
-		end
-	end
-
 	-- Create a command `:Format` local to the LSP buffer
 	vim.api.nvim_buf_create_user_command(bufnr, "Format", function(_)
 		vim.lsp.buf.format({
 			filter = function(client)
-				-- prefer null_ls if available
-				if has_null_ls then
-					return client.name == "null-ls"
-				end
 				-- never use volar
 				return client.name ~= "volar"
 			end,
