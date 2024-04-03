@@ -6,6 +6,7 @@
       - curl
       - gh
       - git
+      - gpg
       - htop
       - maven
       - mysql
