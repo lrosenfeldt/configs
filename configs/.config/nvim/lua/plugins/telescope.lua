@@ -30,15 +30,12 @@ return {
 	},
 	opts = {
 		defaults = {
-			sorting_strategy = "ascending",
+			sorting_strategy = "descending",
 			layout_strategy = "vertical",
 			border = true,
 			prompt_title = "",
 			results_title = "",
 			preview_title = "",
-			-- prompt_prefix = "",
-			-- entry_prefix = "",
-			-- multi_icon = "",
 			color_devicons = false,
 			preview = { msg_bg_fillchar = "10" },
 			layout_config = {
