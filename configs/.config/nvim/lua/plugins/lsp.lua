@@ -84,6 +84,8 @@ return {
 					on_attach = on_attach,
 				})
 			end,
+      -- TODO: with volar v2 the lsp setup changed, maybe I should try using typescript plugin for
+      -- tsserver?
 			["volar"] = function()
 				require("lspconfig").volar.setup({
 					capabilities = capabilites,
