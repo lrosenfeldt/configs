@@ -8,10 +8,15 @@
   when: ansible_distribution == 'MacOSX'
   tags: ["mac", "packages"]
 
-- name: Setup Pop! OS specific configuration.
+- name: Setup Arch specific configuration.
   ansible.builtin.import_tasks: extra_Archlinux.yml
   when: ansible_distribution == 'Archlinux'
   tags: ["arch", "packages"]
+
+- name: Setup Pop! OS specific configuration.
+  ansible.builtin.import_tasks: extra_Pop!_OS.yml
+  when: ansible_distribution == 'Pop!_OS'
+  tags: ["popos", "packages"]
 
 - name: Use the fish shell.
   ansible.builtin.import_tasks: fish.yml

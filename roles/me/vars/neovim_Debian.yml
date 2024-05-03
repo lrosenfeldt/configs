@@ -1,0 +1,8 @@
+---
+prerequisites:
+  - ninja-build
+  - gettext
+  - cmake
+  - unzip
+  - curl
+  - build-essential

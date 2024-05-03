@@ -18,8 +18,8 @@
         docker_install_compose: true
         docker_install_compose_plugin: false
         docker_service_manage: "MOLECULE_FILE in lookup('env')"
-      when: ansible_distribution == 'Archlinux'
-      tags: ["all", "arch", "docker"]
+      when: ansible_distribution != 'MacOSX'
+      tags: ["all", "docker"]
 
   tasks:
     - name: Add git configuration.
