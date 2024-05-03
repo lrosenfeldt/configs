@@ -6,6 +6,12 @@
     repo: "ppa:git-core/ppa"
     state: present
 
+- name: Add golang ppa.
+  become: true
+  ansible.builtin.apt_repository:
+    repo: "ppa:longsleep/golang-backports"
+    state: present
+  
 - name: Create apt keyring directory.
   become: true
   ansible.builtin.file:

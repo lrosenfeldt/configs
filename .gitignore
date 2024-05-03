@@ -1,2 +1,8 @@
 .vault_key
 .galaxy
+
+# venv
+bin
+lib
+lib64
+
