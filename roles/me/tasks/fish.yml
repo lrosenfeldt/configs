@@ -1,11 +1,4 @@
 ---
-- name: Add fish ppa.
-  become: true
-  ansible.builtin.apt_repository:
-    repo: "ppa:fish-shell/release-3"
-    state: present
-  when: ansible_os_family == 'Debian'
-
 - name: Install fish shell and dependencies for fisher.
   become: "{{ ansible_pkg_mgr != 'homebrew' }}"
   ansible.builtin.package:

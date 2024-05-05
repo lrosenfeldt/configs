@@ -1,17 +1,16 @@
 ---
-# Use latest version of git
+# TODO: figure out how to properly do this. apt_repository uses the deprecated apt-key, add-apt-repository freezes when used as a command and finding a stable key signing key url on launchpad is a mess
 - name: Add git ppa.
   become: true
   ansible.builtin.apt_repository:
-    repo: "ppa:git-core/ppa"
+    repo: "{{ item }}"
     state: present
+  loop:
+    - "ppa:fish-shell/release-3"
+    - "ppa:git-core/ppa"
+    - "ppa:longsleep/golang-backports"
+  when: false
 
-- name: Add golang ppa.
-  become: true
-  ansible.builtin.apt_repository:
-    repo: "ppa:longsleep/golang-backports"
-    state: present
-  
 - name: Create apt keyring directory.
   become: true
   ansible.builtin.file:
@@ -40,13 +39,17 @@
     cache_valid_time: 86_400 # one day
     update_cache: true
     name:
+      - clang
       - code
       - curl
       - fzf
       - gh
+      - git
+      - golang-go
       - google-chrome-stable
       - htop
       - keepassxc
+      - ripgrep
       - stow
       - tmux
     state: present
