@@ -73,6 +73,8 @@ return {
 			},
 		})
 
+		local lspconfig = require("lspconfig")
+
 		-- :help mason-lspconfig-automatic-server-setup
 		require("mason-lspconfig").setup_handlers({
 			-- The first entry (without a key) will be the default handler
@@ -84,29 +86,28 @@ return {
 					on_attach = on_attach,
 				})
 			end,
-      -- TODO: with volar v2 the lsp setup changed, maybe I should try using typescript plugin for
-      -- tsserver?
+			["tsserver"] = function()
+				require("lspconfig").tsserver.setup({
+					init_options = {
+						plugins = {
+							{
+								name = "@vue/typescript-plugin",
+								location = "/path/to/@vue/language-server",
+								languages = { "vue" },
+							},
+						},
+					},
+				})
+			end,
 			["volar"] = function()
 				require("lspconfig").volar.setup({
 					capabilities = capabilites,
 					on_attach = on_attach,
-					filetypes = {
-						"typescript",
-						"javascript",
-						"javascriptreact",
-						"typescriptreact",
-						"vue",
-						"json",
-					},
 					init_options = {
 						vue = {
 							hybridMode = false,
 						},
-						typescript = {
-							tsdk = vim.fn.getcwd() .. "node_modules/typescript/lib",
-						},
 					},
-					settings = {},
 				})
 			end,
 			["lua_ls"] = function()
