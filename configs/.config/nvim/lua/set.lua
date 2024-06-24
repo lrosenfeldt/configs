@@ -62,3 +62,9 @@ vim.filetype.add({
 		postcss = "css",
 	},
 })
+
+local uname = vim.loop.os_uname()
+local is_macos = uname.sysname == 'Darwin'
+if is_macos then
+  vim.cmd("command! Finder !open $(dirname %)")
+end
