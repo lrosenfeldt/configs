@@ -86,23 +86,11 @@ return {
 					on_attach = on_attach,
 				})
 			end,
-			["tsserver"] = function()
-				require("lspconfig").tsserver.setup({
-					init_options = {
-						plugins = {
-							{
-								name = "@vue/typescript-plugin",
-								location = "/path/to/@vue/language-server",
-								languages = { "vue" },
-							},
-						},
-					},
-				})
-			end,
 			["volar"] = function()
 				require("lspconfig").volar.setup({
 					capabilities = capabilites,
 					on_attach = on_attach,
+          filetypes = { 'typescript', 'javascript', 'javascriptreact', 'typescriptreact', 'vue' },
 					init_options = {
 						vue = {
 							hybridMode = false,
