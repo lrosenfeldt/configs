@@ -90,7 +90,7 @@ return {
 				require("lspconfig").volar.setup({
 					capabilities = capabilites,
 					on_attach = on_attach,
-          filetypes = { 'typescript', 'javascript', 'javascriptreact', 'typescriptreact', 'vue' },
+					filetypes = { "typescript", "javascript", "javascriptreact", "typescriptreact", "vue" },
 					init_options = {
 						vue = {
 							hybridMode = false,
@@ -103,6 +103,16 @@ return {
 					capabilities = capabilites,
 					on_attach = on_attach,
 					telemetry = { enable = false },
+				})
+			end,
+			["phpactor"] = function()
+				require("lspconfig").phpactor.setup({
+					capabilities = capabilites,
+					on_attach = on_attach,
+					init_options = {
+						["language_server_phpstan.enabled"] = false,
+						["language_server_psalm.enabled"] = false,
+					},
 				})
 			end,
 		})
