@@ -61,7 +61,7 @@ return {
 						node_decremental = "<bs>",
 					},
 				},
-				indent = { enable = true },
+				indent = { enable = false },
 			})
 		end,
 	},
