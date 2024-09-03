@@ -15,6 +15,7 @@ return {
 			{ "<c-space>", desc = "Increment selection" },
 			{ "<bs>", desc = "Decrement selection", mode = "x" },
 		},
+    branch = "fix/matches",
 		config = function()
 			-- Add languages that you want to be installed
 			require("nvim-treesitter.configs").setup({
